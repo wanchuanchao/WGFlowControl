@@ -6,6 +6,11 @@
 [![Platform](https://img.shields.io/cocoapods/p/WGFlowControl.svg?style=flat)](https://cocoapods.org/pods/WGFlowControl)
 
 WGFlowControl旨在解决多视图展示冲突的问题
+> 由两部分组成
+>
+> WGFlowControlManager
+>
+> WGFlowControlView
 
 ### WGFlowControlManager
 
