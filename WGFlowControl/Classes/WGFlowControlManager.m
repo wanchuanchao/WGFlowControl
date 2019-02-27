@@ -10,7 +10,7 @@
 
 NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlManagerWaitingShowIdentifier";
 
-inline BOOL identifierIsNil(NSString *identifier){
+static BOOL identifierIsNil(NSString *identifier){
     return !identifier || (identifier.length == 0);
 }
 
