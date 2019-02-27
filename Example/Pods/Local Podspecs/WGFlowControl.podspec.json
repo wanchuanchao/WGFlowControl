@@ -1,0 +1,22 @@
+{
+  "name": "WGFlowControl",
+  "version": "0.1.0",
+  "summary": "A short description of WGFlowControl.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/wanccao/WGFlowControl",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "wanccao": "wanchuanchao@zbj.com"
+  },
+  "source": {
+    "git": "https://github.com/wanccao/WGFlowControl.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "WGFlowControl/Classes/**/*"
+}

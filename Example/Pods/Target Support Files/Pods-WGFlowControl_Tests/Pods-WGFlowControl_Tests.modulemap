@@ -1,0 +1,6 @@
+framework module Pods_WGFlowControl_Tests {
+  umbrella header "Pods-WGFlowControl_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,16 @@
+PODS:
+  - WGFlowControl (0.1.0)
+
+DEPENDENCIES:
+  - WGFlowControl (from `../`)
+
+EXTERNAL SOURCES:
+  WGFlowControl:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  WGFlowControl: a5d53540a0c7b16e3aa495923cbce8518b49d4c5
+
+PODFILE CHECKSUM: 593fbab80f3c43272e67a1b17acdf9d5eb2ba22d
+
+COCOAPODS: 1.5.3

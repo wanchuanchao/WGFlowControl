@@ -1,0 +1,6 @@
+framework module WGFlowControl {
+  umbrella header "WGFlowControl-umbrella.h"
+
+  export *
+  module * { export * }
+}
