@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'WGFlowControl'
   s.version          = '0.1.2'
-  s.summary          = 'A short description of WGFlowControl.'
+  s.summary          = 'WGFlowControl旨在解决多视图展示冲突的问题'
 
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
