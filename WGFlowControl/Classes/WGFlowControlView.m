@@ -26,6 +26,7 @@
     }
 }
 - (void)dismiss{
+    NSLog(@"dismiss");
     [self removeFromSuperview];
     if (self.didDismissedBlock) {
         self.didDismissedBlock();
