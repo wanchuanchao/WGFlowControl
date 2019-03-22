@@ -10,8 +10,7 @@
 #endif
 #endif
 
-#import "WGFlowControlManager.h"
-#import "WGFlowControlView.h"
+#import "WGViewFlow.h"
 
 FOUNDATION_EXPORT double WGFlowControlVersionNumber;
 FOUNDATION_EXPORT const unsigned char WGFlowControlVersionString[];

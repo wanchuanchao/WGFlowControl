@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'WGFlowControl'
-  s.version          = '0.1.2'
+  s.version          = '1.0.1'
   s.summary          = 'WGFlowControl旨在解决多视图展示冲突的问题'
 
   s.description      = <<-DESC
@@ -20,5 +20,8 @@ TODO: Add long description of the pod here.
   s.author           = { 'wanccao' => 'wanccao@sina.com' }
   s.source           = { :git => 'https://github.com/wanccao/WGFlowControl.git', :tag => s.version.to_s }
   s.ios.deployment_target = '8.0'
-  s.source_files = 'WGFlowControl/Classes/**/*'
+
+  s.subspec 'WGViewFlow' do |sp|
+    sp.source_files = 'WGFlowControl/WGViewFlow/**/*.{h,m}'
+  end
 end
