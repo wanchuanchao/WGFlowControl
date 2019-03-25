@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, WGViewFlowError) {
  通过实现方法,获得dismissBlock,在视图消失时,主动调用dismissBlock,将继续自动展示下一个视图
  @param dismissBlock 视图消失时,需要主动调用
  */
-- (void)dismissBlock:(void (^)(void))dismissBlock;
+- (void)WGViewFlowDismissBlock:(void (^)(void))dismissBlock;
 
 @optional
 
