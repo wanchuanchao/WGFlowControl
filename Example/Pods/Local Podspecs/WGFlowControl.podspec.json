@@ -1,6 +1,6 @@
 {
   "name": "WGFlowControl",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "summary": "WGFlowControl旨在解决多视图展示冲突的问题",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/wanccao/WGFlowControl",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/wanccao/WGFlowControl.git",
-    "tag": "1.0.1"
+    "tag": "1.0.2"
   },
   "platforms": {
     "ios": "8.0"
