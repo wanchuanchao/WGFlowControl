@@ -73,8 +73,8 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
         NSAssert(NO, @"WGViewFlowLog view没有实现WGViewFlowGroupIdentifier方法");
         return;
     }
-    if (![view respondsToSelector:@selector(dismissBlock:)]) {
-        NSAssert(NO, @"WGViewFlowLog view没有实现dismissBlock:方法");
+    if (![view respondsToSelector:@selector(WGViewFlowDismissBlock:)]) {
+        NSAssert(NO, @"WGViewFlowLog view没有实现WGViewFlowDismissBlock:方法");
         return;
     }
     NSString *groupIdentifier = [view WGViewFlowGroupIdentifier];
@@ -137,7 +137,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     void (^block)(void) = ^(void){
         [self viewDismissed];
     };
-    [view dismissBlock:block];
+    [view WGViewFlowDismissBlock:block];
     if (idx != -1) {
         //待展示已存在 需要更新
         if (idx == 0 && waitViews.firstObject.superview) {

@@ -52,7 +52,7 @@ static NSString *buttonTitle(WGViewFlowViewType type){
     }
     return self;
 }
--(void)dismissBlock:(void (^)(void))dismissBlock{
+-(void)WGViewFlowDismissBlock:(void (^)(void))dismissBlock{
     self.dismissBlock = dismissBlock;
 }
 -(BOOL)WGViewFlowNeedUpdate{
