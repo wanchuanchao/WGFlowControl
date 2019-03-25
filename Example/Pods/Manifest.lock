@@ -1,7 +1,7 @@
 PODS:
-  - WGFlowControl (1.0.2):
-    - WGFlowControl/WGViewFlow (= 1.0.2)
-  - WGFlowControl/WGViewFlow (1.0.2)
+  - WGFlowControl (1.0.3):
+    - WGFlowControl/WGViewFlow (= 1.0.3)
+  - WGFlowControl/WGViewFlow (1.0.3)
 
 DEPENDENCIES:
   - WGFlowControl (from `../`)
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  WGFlowControl: 78ca5e2003ace051ada6ef028a6a318ac86d0ff3
+  WGFlowControl: f066b162995781e2ab33a032076aeb6854d46507
 
 PODFILE CHECKSUM: 593fbab80f3c43272e67a1b17acdf9d5eb2ba22d
 
