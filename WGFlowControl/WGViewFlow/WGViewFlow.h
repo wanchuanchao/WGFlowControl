@@ -19,7 +19,7 @@
 //  当count>1时,等待所有的视图添加完毕,将整个队列排序后,放入待展示队列
 //  调用showViews之后,待展示队列按照添加时间先后展示
 //  view通过实现WGViewFlowViewWillShow:,设置stop判断是否跳过显示
-//  view展示完成,通过实现- (void)dismissBlock:(void (^)(void))dismissBlock获得的dismissBlock,进行调用,展示下一个视图
+//  view展示完成,通过实现- (void)WGViewFlowDismissBlock:(void (^)(void))dismissBlock获得的dismissBlock,进行调用,展示下一个视图
 //  调用hideViews时,移除屏幕暂停展示
 //  调用cleanViews,移除屏幕,删除所有视图
 
@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, WGViewFlowError) {
 - (NSString *)WGViewFlowGroupIdentifier;
 
 /**
- 通过实现方法,获得dismissBlock,在视图消失时,主动调用dismissBlock,将继续自动展示下一个视图
+ 通过实现方法,获得WGViewFlowDismissBlock,在视图消失时,主动调用dismissBlock,将继续自动展示下一个视图
  @param dismissBlock 视图消失时,需要主动调用
  */
 - (void)WGViewFlowDismissBlock:(void (^)(void))dismissBlock;
