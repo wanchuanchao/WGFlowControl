@@ -18,23 +18,28 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
 
 + (BOOL)judgeClass{
     BOOL isClassWGViewFlow = [[self class] isKindOfClass:[WGViewFlow class]];
-    NSAssert(!isClassWGViewFlow, @"WGViewFlow error: cannot use WGViewFlow ,use subClass extend WGFlowControlManager");
+    NSAssert(!isClassWGViewFlow, @"WGViewFlowLog error: cannot use WGViewFlow ,use subClass extend WGFlowControlManager");
     return isClassWGViewFlow;
 }
 + (void)setShowAble:(BOOL)showAble{
+    NSLog(@"WGViewFlowLog %s",__func__);
     objc_setAssociatedObject(self, @selector(setShowAble:), @(showAble), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 + (BOOL)getShowAble{
+    NSLog(@"WGViewFlowLog %s",__func__);
     NSNumber *showAble = objc_getAssociatedObject(self, @selector(setShowAble:));
     return showAble && [showAble boolValue];
 }
 + (void)setAllViewDic:(NSMutableDictionary *)dic{
+    NSLog(@"WGViewFlowLog %s",__func__);
     objc_setAssociatedObject(self, @selector(setAllViewDic:), dic, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 + (NSMutableDictionary *)getAllViewDic{
+    NSLog(@"WGViewFlowLog %s",__func__);
     return objc_getAssociatedObject(self, @selector(setAllViewDic:));
 }
 + (NSMutableArray <UIView<WGViewFlowDelegate> *> *)getViews:(NSString *)identifier{
+    NSLog(@"WGViewFlowLog %s",__func__);
     NSMutableDictionary *viewsDic = [self getAllViewDic];
     if (!viewsDic) {
         viewsDic = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -45,55 +50,66 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }
     return viewsDic[identifier];
 }
++ (void)setNilViews:(NSString *)identifier{
+    NSLog(@"WGViewFlowLog %s",__func__);
+    NSMutableDictionary *viewsDic = [self getAllViewDic];
+    [viewsDic removeObjectForKey:identifier];
+}
 + (void)addView:(UIView<WGViewFlowDelegate> *)view error:(WGViewFlowError *)error{
+    NSLog(@"WGViewFlowLog %s",__func__);
     if ([self judgeClass]) {
         return;
     }
-    if (!view || [view isKindOfClass:[UIView class]]) {
+    if (!view || ![view isKindOfClass:[UIView class]]) {
         *error = WGViewFlowError_nilView;
+        NSLog(@"WGViewFlowLog WGViewFlowError_nilView");
         return;
     }
     if (![view conformsToProtocol:@protocol(WGViewFlowDelegate)]) {
-        NSAssert(NO, @"view没有遵循WGViewFlowDelegate");
+        NSAssert(NO, @"WGViewFlowLog view没有遵循WGViewFlowDelegate");
         return;
     }
     if (![view respondsToSelector:@selector(WGViewFlowGroupIdentifier)]) {
-        NSAssert(NO, @"view没有实现WGViewFlowGroupIdentifier方法");
+        NSAssert(NO, @"WGViewFlowLog view没有实现WGViewFlowGroupIdentifier方法");
         return;
     }
     if (![view respondsToSelector:@selector(dismissBlock:)]) {
-        NSAssert(NO, @"view没有实现dismissBlock:方法");
+        NSAssert(NO, @"WGViewFlowLog view没有实现dismissBlock:方法");
         return;
     }
     NSString *groupIdentifier = [view WGViewFlowGroupIdentifier];
     if (isNil(groupIdentifier) || [groupIdentifier isEqualToString:WGFlowControlManagerWaitingShowIdentifier]) {
         *error = WGViewFlowError_nilGroupIdentifier;
-        NSLog(@"WGFlowControl error: [WGFlowControlManager addView:identifier:] identifier is nil");
+        NSLog(@"WGViewFlowLog error: WGViewFlowError_nilGroupIdentifier");
         return;
     }
+    NSLog(@"WGViewFlowLog view groupIdentifier %@",groupIdentifier);
     NSString *sortIdentifier;
     if ([view respondsToSelector:@selector(WGViewFlowSortIdentifier)]) {
         sortIdentifier = [view WGViewFlowSortIdentifier];
     }
+    NSLog(@"WGViewFlowLog view sortIdentifier %@",sortIdentifier);
     NSInteger count = 1;
     if ([view respondsToSelector:@selector(WGViewFlowViewCounts)]) {
         count = [view WGViewFlowViewCounts];
     }
     if (count < 1) {
         *error = WGViewFlowError_nilCounts;
-        NSLog(@"WGFlowControl error: [WGFlowControlManager addView:identifier:] identifier is nil");
+        NSLog(@"WGViewFlowLog error: WGViewFlowError_nilCounts");
         return;
     }
     count = (int)count;
+    NSLog(@"WGViewFlowLog view count %ld",count);
     if (isNil(sortIdentifier) && count != 1) {
         *error = WGViewFlowError_nilSortIdentifier_counts;
-        NSLog(@"WGFlowControl error: [WGFlowControlManager addView:identifier:] identifier is nil");
+        NSLog(@"WGViewFlowLog error: WGViewFlowError_nilSortIdentifier_counts");
         return;
     }
     BOOL needUpdate = NO;
     if ([view respondsToSelector:@selector(WGViewFlowNeedUpdate)]) {
         needUpdate = [view WGViewFlowNeedUpdate];
     }
+    NSLog(@"WGViewFlowLog view needUpdate %d",needUpdate);
     //获取待展示的队列
     NSMutableArray<UIView<WGViewFlowDelegate> *> *waitViews = [self getViews:WGFlowControlManagerWaitingShowIdentifier];
     __block NSInteger idx = -1;
@@ -115,6 +131,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }];
     //待展示已存在 && 不需要更新
     if (idx != -1 && !needUpdate) {
+        NSLog(@"WGViewFlowLog waitViews 待展示已存在 && 不需要更新 return");
         return;
     }
     void (^block)(void) = ^(void){
@@ -128,13 +145,16 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
             [waitViews.firstObject removeFromSuperview];
             waitViews[idx] = view;
             [self showViews];
+            NSLog(@"WGViewFlowLog waitViews已存在 需要更新 视图已在屏幕展示 updated");
             return;
         }
         waitViews[idx] = view;
+        NSLog(@"WGViewFlowLog waitViews已存在 需要更新 updated");
         return;
     }
     //待展示队列里没有相同的视图 && 只展示一个视图
     if (count == 1) {
+        NSLog(@"WGViewFlowLog waitViews里没有相同的视图 && 只展示一个视图 added");
         [waitViews addObject:view];
         if ([self getShowAble]) {
             [self showViews];
@@ -150,26 +170,31 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
         }
     }];
     if (idx != -1 && !needUpdate) {
+        NSLog(@"WGViewFlowLog  views队列已存在 不需要更新 return");
         return;
     }
     if (idx != -1) {
         //待展示已存在 需要更新
         views[idx] = view;
+        NSLog(@"WGViewFlowLog  views队列已存在 需要更新 updated");
         return;
     }
+    NSLog(@"WGViewFlowLog added");
     [views addObject:view];
     if (views.count >= count) {
         //相同组别的view个数,已满足进行展示的条件
         //进行排序
+        NSLog(@"WGViewFlowLog 相同组别的view个数,已满足进行展示的条件 进行排序 waitViews add");
         [self sortViews:views];
         [waitViews addObjectsFromArray:views];
-        views = nil;
+        [self setNilViews:groupIdentifier];
         if ([self getShowAble]) {
             [self showViews];
         }
     }
 }
 + (void)sortViews:(NSMutableArray<UIView<WGViewFlowDelegate> *> *)views{
+    NSLog(@"WGViewFlowLog %s",__func__);
     [views sortUsingComparator:^NSComparisonResult(UIView<WGViewFlowDelegate> *  _Nonnull obj1, UIView<WGViewFlowDelegate> *  _Nonnull obj2) {
         NSString *obj1_sortIdentifier = [obj1 WGViewFlowSortIdentifier];
         NSString *obj2_sortIdentifier = [obj2 WGViewFlowSortIdentifier];
@@ -177,6 +202,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }];
 }
 + (void)showViews{
+    NSLog(@"WGViewFlowLog %s",__func__);
     if ([self judgeClass]) {
         return;
     }
@@ -205,6 +231,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }
 }
 + (void)hideViews{
+    NSLog(@"WGViewFlowLog %s",__func__);
     if ([self judgeClass]) {
         return;
     }
@@ -217,6 +244,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }
 }
 + (void)viewDismissed{
+    NSLog(@"WGViewFlowLog %s",__func__);
     NSMutableArray<UIView<WGViewFlowDelegate> *> *views = [self getViews:WGFlowControlManagerWaitingShowIdentifier];
     if (views.count) {
         [views removeObjectAtIndex:0];
@@ -226,6 +254,7 @@ NSString * const WGFlowControlManagerWaitingShowIdentifier = @"WGFlowControlMana
     }
 }
 + (void)cleanViews{
+    NSLog(@"WGViewFlowLog %s",__func__);
     [self hideViews];
     [self setAllViewDic:nil];
 }
