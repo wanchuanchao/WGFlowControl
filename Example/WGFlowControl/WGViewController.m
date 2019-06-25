@@ -20,6 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [super viewDidLoad];
     UIButton *button1 = [UIButton buttonWithType:(UIButtonTypeCustom)];
     button1.backgroundColor = UIColor.blueColor;
     [button1 setTitle:@"异步展示视图" forState:(UIControlStateNormal)];
