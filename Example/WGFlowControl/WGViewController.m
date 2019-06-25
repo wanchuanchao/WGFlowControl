@@ -26,6 +26,7 @@
     button1.frame = CGRectMake(100, 200, 200, 30);
     [button1 addTarget:self action:@selector(addViewAction) forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:button1];
+    NSLog(@"test");
     
     UIButton *button2 = [UIButton buttonWithType:(UIButtonTypeCustom)];
     button2.backgroundColor = UIColor.blueColor;
